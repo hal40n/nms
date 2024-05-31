@@ -45,9 +45,22 @@ RUN npm install
 RUN npm install tailwindcss
 RUN npx tailwindcss init
 
-# Set the correct permissions
-RUN chown -R www-data:www-data /var/www
-RUN chmod -R 755 /var/www
+# Add the UID and GID as build arguments
+ARG UID
+ARG GID
+
+# Create a user and group with the specified UID and GID
+RUN groupadd -g ${GID} hal40n && \
+    useradd -u ${UID} -g hal40n -m hal40n
+
+# Change current user to hal40n
+USER hal40n
+
+# Copy existing application directory contents
+COPY . /var/www
+
+# Copy existing application directory permissions
+COPY --chown=hal40n:hal40n . /var/www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

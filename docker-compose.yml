@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        UID: ${USER_ID}
+        GID: ${GROUP_ID}
     container_name: nms
     working_dir: /var/www
     volumes:
@@ -15,6 +18,7 @@ services:
       - "8000:8000"
     networks:
       - nms
+    user: "${USER_ID}:${GROUP_ID}"
 
   web:
     image: nginx:alpine
@@ -51,6 +55,7 @@ services:
     volumes:
       - ./:/var/www
     command: sh -c "npm install && npm run watch"
+    user: "${USER_ID}:${GROUP_ID}"
 
 networks:
   nms:
