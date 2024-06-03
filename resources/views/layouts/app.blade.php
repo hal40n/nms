@@ -23,7 +23,7 @@
         </div>
     </nav>
 
-    <div class="container mx-auto mt-8">
+    <div class="container mx-auto mt-8 mb-8">
         @yield('content')
     </div>
 
