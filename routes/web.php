@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ProcedureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', [ArticleController::class, 'index'])->name('home');
-Route::resource('articles', ArticleController::class);
+// Route::get('/', [ArticleController::class, 'index'])->name('home');
+// Route::resource('articles', ArticleController::class);
+
+
+Route::get('/', [ProcedureController::class, 'index']);
+Route::resource('procedures', ProcedureController::class);
