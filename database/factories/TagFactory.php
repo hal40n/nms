@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CategoryFactory extends Factory
+class TagFactory extends Factory
 {
-    protected $model = Category::class;
+    protected $model = Tag::class;
 
     public function definition()
     {
@@ -16,4 +16,3 @@ class CategoryFactory extends Factory
         ];
     }
 }
-
