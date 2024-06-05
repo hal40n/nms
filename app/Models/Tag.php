@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    use HasFactory;
+     use HasFactory;
 
     protected $fillable = ['name'];
 
-    public function articles()
+    public function procedures()
     {
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Procedure::class, 'procedure_tag');
     }
 }

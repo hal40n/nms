@@ -11,8 +11,8 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    public function articles()
+    public function procedures()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Procedure::class);
     }
 }
