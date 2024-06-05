@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Procedure;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,28 +24,31 @@ class ProcedureController extends Controller
 
     public function create()
     {
-        return view('procedures.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('procedures.create', compact('categories', 'tags'));
     }
 
     public function store(Request $request)
     {
-        // フォームデータのバリデーション
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
 
-        // 新しい手順書を作成
         $procedure = new Procedure([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'user_id' => $this->defaultUserId, // デフォルトのユーザーIDを設定
+            'category_id' => $request->input('category_id'),
+            'user_id' => $this->defaultUserId,
         ]);
 
-        // 手順書をデータベースに保存
         $procedure->save();
 
-        // 手順書一覧ページにリダイレクトし、成功メッセージを表示
+        if($request->has('tags')) {
+            $procedure->tags()->attach($request->input('tags'));
+        }
+
         return redirect()->route('procedures.index')->with('success', 'Procedure created successfully.');
     }
 
