@@ -54,12 +54,16 @@ class ProcedureController extends Controller
 
     public function show(Procedure $procedure)
     {
-        return view('procedures.show', compact('procedure'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('procedures.show', compact('procedure', 'categories', 'tags'));
     }
 
     public function edit(Procedure $procedure)
     {
-        return view('procedures.edit', compact('procedure'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('procedures.edit', compact('procedure', 'categories', 'tags'));
     }
 
     public function update(Request $request, Procedure $procedure)

@@ -3,22 +3,27 @@
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-lg">
     <h1 class="text-2xl font-bold mb-4">{{ $procedure->title }}</h1>
-    <p class="text-gray-600 mb-4">{{ $procedure->user->name }} - {{ $procedure->created_at->format('M d, Y') }}</p>
-    <div class="text-gray-800 mb-4">
-        {!! nl2br(e($procedure->content)) !!}
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold">Category:</label>
+        <span>{{ $procedure->category->name }}</span>
     </div>
-    <p class="text-gray-600 mb-4">Category: {{ $procedure->category->name }}</p>
-    <p class="text-gray-600 mb-4">Tags:
-        @foreach ($procedure->tags as $tag)
-            <span class="bg-gray-200 px-2 py-1 rounded">{{ $tag->name }}</span>
-        @endforeach
-    </p>
-    <a href="{{ route('procedures.edit', $procedure->id) }}" class="text-blue-600 hover:underline">Edit</a>
-
-    <form action="{{ route('procedures.destroy', $procedure->id) }}" method="POST" class="inline-block">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="text-red-600 hover:underline ml-4">Delete</button>
-    </form>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold">Content:</label>
+        <div class="prose max-w-none">
+            {!! $procedure->content !!}
+        </div>
+    </div>
+    <div class="mb-6 flex">
+        <div class="mr-4">
+            <label class="block text-gray-700 font-bold">Tags:</label>
+        </div>
+        <div>
+            @foreach ($procedure->tags as $tag)
+                <span class="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{ $tag->name }}</span>
+            @endforeach
+        </div>
+    </div>
+    <a href="{{ route('procedures.edit', $procedure->id) }}" class="bg-blue-600 text-white px-4 py-2 rounded">Edit</a>
+    <a href="{{ route('procedures.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded">Back</a>
 </div>
 @endsection

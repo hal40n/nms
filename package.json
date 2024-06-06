@@ -14,7 +14,8 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "simplemde": "^1.11.2",
+        "@tailwindcss/typography": "^0.5.13",
+        "easymde": "^2.18.0",
         "tinymce": "^7.1.1"
     }
 }
