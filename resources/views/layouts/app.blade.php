@@ -41,17 +41,56 @@
                 plugins: [
                     'advlist autolink lists link image charmap print preview anchor',
                     'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount'
+                    'insertdatetime media table paste code help wordcount',
+                    'codesample', 'image'
                 ],
-                toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                          alignleft aligncenter alignright alignjustify | \
-                          bullist numlist outdent indent | removeformat | help',
+                toolbar: 'undo redo | formatselect | bold italic backcolor | ' +
+                        'alignleft aligncenter alignright alignjustify | ' +
+                        'bullist numlist outdent indent | removeformat | help | codesample | image',
                 setup: function (editor) {
                     editor.on('change', function () {
                         editor.save();
                     });
+                },
+                codesample_languages: [
+                    { text: 'HTML/XML', value: 'markup' },
+                    { text: 'JavaScript', value: 'javascript' },
+                    { text: 'CSS', value: 'css' },
+                    { text: 'PHP', value: 'php' },
+                    { text: 'Ruby', value: 'ruby' },
+                    { text: 'Python', value: 'python' },
+                    { text: 'Java', value: 'java' },
+                    { text: 'C', value: 'c' },
+                    { text: 'C#', value: 'csharp' },
+                    { text: 'C++', value: 'cpp' }
+                ],
+                images_upload_url: '{{ route('upload_image') }}',
+                automatic_uploads: true,
+                file_picker_types: 'image',
+                file_picker_callback: function (cb, value, meta) {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+
+                    input.onchange = function () {
+                        var file = this.files[0];
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            var id = 'blobid' + (new Date()).getTime();
+                            var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                            var base64 = reader.result.split(',')[1];
+                            var blobInfo = blobCache.create(id, file, base64);
+                            blobCache.add(blobInfo);
+                            cb(blobInfo.blobUri(), { title: file.name });
+                        };
+                        reader.readAsDataURL(file);
+                    };
+
+                    input.click();
                 }
             });
+
+
 
             $('#tags').select2({
                 tags: true,

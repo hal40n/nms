@@ -4,21 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProceduresTable extends Migration
+class CreatePagesTable extends Migration
 {
     public function up()
     {
-        Schema::create('procedures', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('procedure_id')->constrained('procedures')->onDelete('cascade');
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->text('content');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('procedures');
+        Schema::dropIfExists('pages');
     }
 }
-

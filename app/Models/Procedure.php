@@ -9,20 +9,10 @@ class Procedure extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'user_id', 'category_id'];
+    protected $fillable = ['title', 'description'];
 
-    public function user()
+    public function pages()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'procedure_tag');
+        return $this->hasMany(Page::class);
     }
 }

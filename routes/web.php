@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProcedureController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ImageUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/', [ArticleController::class, 'index'])->name('home');
-// Route::resource('articles', ArticleController::class);
-
-
-Route::get('/', [ProcedureController::class, 'index']);
+Route::get('/', [ProcedureController::class, 'index'])->name('procedures.index');
 Route::resource('procedures', ProcedureController::class);
+Route::resource('procedures.pages', PageController::class);
+Route::post('/upload_image', [ImageUploadController::class, 'store'])->name('upload_image');

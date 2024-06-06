@@ -3,20 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Tag;
 use App\Models\Procedure;
+use App\Models\Page;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        User::factory(10)->create();
-        Category::factory(5)->create();
-        Tag::factory(10)->create();
-
-        Procedure::factory(50)->create();
+         Procedure::factory()
+            ->count(30)
+            ->create()
+            ->each(function ($procedure) {
+                $procedure->pages()->createMany(
+                    Page::factory()->count(10)->make()->toArray()
+                );
+            });
     }
 }
 

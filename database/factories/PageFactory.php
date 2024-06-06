@@ -2,18 +2,20 @@
 
 namespace Database\Factories;
 
+use App\Models\Page;
 use App\Models\Procedure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProcedureFactory extends Factory
+class PageFactory extends Factory
 {
-    protected $model = Procedure::class;
+    protected $model = Page::class;
 
     public function definition()
     {
         return [
+            'procedure_id' => Procedure::factory(),
             'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            'content' => $this->faker->paragraphs(3, true),
         ];
     }
 }
